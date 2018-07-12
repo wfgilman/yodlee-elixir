@@ -8,12 +8,13 @@ defmodule Yodlee.Mixfile do
   def project do
     [
       app: :yodlee,
-      version: "0.1.1",
+      version: "0.1.2",
       description: @description,
       elixir: "~> 1.5",
       elixirc_paths: elixirc_paths(Mix.env),
       package: package(),
       deps: deps(),
+      source_url: "https://github.com/wfgilman/yodlee-elixir",
       dialyzer: [plt_add_deps: false],
       test_coverage: [tool: ExCoveralls],
       preferred_cli_env: ["coveralls": :test, "coveralls.detail": :test]
