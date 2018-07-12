@@ -8,7 +8,7 @@ defmodule Yodlee.Mixfile do
   def project do
     [
       app: :yodlee,
-      version: "0.1.0",
+      version: "0.1.1",
       description: @description,
       elixir: "~> 1.5",
       elixirc_paths: elixirc_paths(Mix.env),
@@ -41,11 +41,11 @@ defmodule Yodlee.Mixfile do
 
   defp package do
     [
-      name: :plaid_elixir,
+      name: :yodlee_elixir,
       files: ["lib", "mix.exs", "README*", "LICENSE*"],
       licenses: ["MIT"],
       maintainers: ["Will Gilman"],
-      links: %{"Github" => "https://github.com/wfgilman/plaid-elixir"}
+      links: %{"Github" => "https://github.com/wfgilman/yodlee-elixir"}
     ]
   end
 end
