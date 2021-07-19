@@ -4,5 +4,5 @@ defmodule Yodlee.Money do
   """
 
   defstruct amount: nil, currency: nil
-  @type t :: %__MODULE__{amount: float, currency: String.t}
+  @type t :: %__MODULE__{amount: float, currency: String.t()}
 end
