@@ -18,15 +18,15 @@ defmodule Yodlee.Utils do
   end
 
   defp pair({key, value}) do
-    param_name = to_string(key) |> URI.encode_www_form()
+    param_name = key |> to_string() |> URI.encode_www_form()
     param_value =
       cond do
         is_map(value) ->
           Poison.encode!(value)
         is_list(value) ->
-          Enum.map_join(value, "|", fn x -> x end) |> URI.encode_www_form()
+          value |> Enum.map_join("|", fn x -> x end) |> URI.encode_www_form()
         true ->
-          to_string(value) |> URI.encode_www_form()
+          value |> to_string() |> URI.encode_www_form()
       end
     "#{param_name}=#{param_value}"
   end
