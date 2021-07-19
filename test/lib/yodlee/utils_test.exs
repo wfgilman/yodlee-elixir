@@ -1,10 +1,8 @@
 defmodule Yodlee.UtilsTest do
-
   use ExUnit.Case
   alias Yodlee.Utils
 
   describe "yodlee_utils" do
-
     test "encode_params/1 converts map to binary" do
       params = %{key1: "value1", key2: "value2"}
       encoded = Utils.encode_params(params)
