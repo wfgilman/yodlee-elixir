@@ -11,13 +11,13 @@ defmodule Yodlee.Mixfile do
       version: "0.1.2",
       description: @description,
       elixir: "~> 1.5",
-      elixirc_paths: elixirc_paths(Mix.env),
+      elixirc_paths: elixirc_paths(Mix.env()),
       package: package(),
       deps: deps(),
       source_url: "https://github.com/wfgilman/yodlee-elixir",
       dialyzer: [plt_add_deps: false],
       test_coverage: [tool: ExCoveralls],
-      preferred_cli_env: ["coveralls": :test, "coveralls.detail": :test]
+      preferred_cli_env: [coveralls: :test, "coveralls.detail": :test]
     ]
   end
 
@@ -30,13 +30,13 @@ defmodule Yodlee.Mixfile do
 
   defp deps do
     [
-      {:httpoison, "~> 0.13"},
-      {:poison, "~> 3.0"},
-      {:bypass, "~> 0.8", only: [:test]},
-      {:recase, "~> 0.2"},
-      {:credo, "~> 0.5", only: [:dev], runtime: false},
-      {:excoveralls, "~> 0.6", only: [:test]},
-      {:ex_doc, "~> 0.16", only: [:dev], runtime: false}
+      {:httpoison, "~> 1.8.0"},
+      {:poison, "~> 4.0.1"},
+      {:bypass, "~> 2.1.0", only: [:test]},
+      {:recase, "~> 0.7.0"},
+      {:credo, "~> 1.5.6", only: [:dev], runtime: false},
+      {:excoveralls, "~> 0.14.1", only: [:test]},
+      {:ex_doc, "~> 0.24.2", only: [:dev], runtime: false}
     ]
   end
 

@@ -71,7 +71,7 @@ defmodule Yodlee.Utils do
     error =
       resp.body
       |> normalize_keys()
-      |> Poison.Decode.decode(as: %Yodlee.Error{})
+      |> Poison.Decode.transform(%{as: %Yodlee.Error{}})
     {:error, error}
   end
   def handle_resp({:error, %HTTPoison.Error{} = error}, _schema) do
@@ -87,19 +87,19 @@ defmodule Yodlee.Utils do
     cobrand
     |> normalize_keys()
     |> Map.put("session", session)
-    |> Poison.Decode.decode(as: %Cobrand{})
+    |> Poison.Decode.transform(%{as: %Cobrand{}})
   end
   defp map_body(%{"user" => user}, :user) do
     session = get_in(user, ["session", "userSession"])
     user
     |> normalize_keys()
     |> Map.put("session", session)
-    |> Poison.Decode.decode(as: %User{})
+    |> Poison.Decode.transform(%{as: %User{}})
   end
   defp map_body(%{"account" => accounts}, :account) do
     accounts
     |> Enum.map(&normalize_keys/1)
-    |> Poison.Decode.decode(as: [%Account{
+    |> Poison.Decode.transform(%{as: [%Account{
         amount_due: %Money{},
         balance: %Money{},
         last_payment_amount: %Money{},
@@ -107,35 +107,35 @@ defmodule Yodlee.Utils do
         original_loan_amount: %Money{},
         principal_balance: %Money{},
         refreshinfo: %Refreshinfo{}
-      }])
+      }]})
   end
   defp map_body(%{"transaction" => trans}, :transaction) do
     trans
     |> Enum.map(&normalize_keys/1)
-    |> Poison.Decode.decode(as: [%Transaction{
+    |> Poison.Decode.transform(%{as: [%Transaction{
         amount: %Yodlee.Money{},
         interest: %Yodlee.Money{},
         principal: %Yodlee.Money{}
-      }])
+      }]})
   end
   defp map_body(%{"providerAccount" => provider_accounts}, :provider_account) when is_list(provider_accounts) do
     provider_accounts
     |> Enum.map(&normalize_keys/1)
-    |> Poison.Decode.decode(as: [%ProviderAccount{
+    |> Poison.Decode.transform(%{as: [%ProviderAccount{
         refresh_info: %Refreshinfo{}
-      }])
+      }]})
   end
   defp map_body(%{"providerAccount" => provider_accounts}, :provider_account) do
     provider_accounts
     |> normalize_keys()
-    |> Poison.Decode.decode(as: %ProviderAccount{
+    |> Poison.Decode.transform(%{as: %ProviderAccount{
         refresh_info: %Refreshinfo{}
-      })
+      }})
   end
   defp map_body(%{"provider" => providers}, :provider) do
     providers
     |> Enum.map(&normalize_keys/1)
-    |> Poison.Decode.decode(as: [%Provider{}])
+    |> Poison.Decode.transform(%{as: [%Provider{}]})
   end
   defp map_body(%{"user" => %{"accessTokens" => [token | _]}}, :fastlink) do
     token
@@ -148,7 +148,7 @@ defmodule Yodlee.Utils do
   defp map_body(%{"userData" => user_data}, :data_extract) do
     user_data
     |> Enum.map(&normalize_keys/1)
-    |> Poison.Decode.decode(as: [%DataExtract{
+    |> Poison.Decode.transform(%{as: [%DataExtract{
         user: %User{},
         provider_account: [%ProviderAccount{
           refresh_info: %Refreshinfo{}
@@ -167,12 +167,12 @@ defmodule Yodlee.Utils do
           interest: %Yodlee.Money{},
           principal: %Yodlee.Money{}
         }]
-      }])
+      }]})
   end
   defp map_body(%{"event" => webhooks}, :webhook) do
     webhooks
     |> Enum.map(&normalize_keys/1)
-    |> Poison.Decode.decode(as: [%Webhook{}])
+    |> Poison.Decode.transform(%{as: [%Webhook{}]})
   end
   defp map_body(_, :webhook) do
     []

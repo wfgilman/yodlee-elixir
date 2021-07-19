@@ -71,13 +71,13 @@ defmodule Yodlee do
     request(method, endpoint, rb, rh, options)
   end
 
-  defp process_url(endpoint) do
+  def process_url(endpoint) do
     require_root_uri() <> endpoint
   end
 
-  defp process_response_body(""), do: ""
-  defp process_response_body(body) do
-    case Poison.Parser.parse(body) do
+  def process_response_body(""), do: ""
+  def process_response_body(body) do
+    case Poison.decode(body) do
       {:ok, parsed_body} -> parsed_body
       {:error, _}        -> {:invalid, body}
     end
